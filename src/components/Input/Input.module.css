@@ -1,0 +1,19 @@
+.input {
+  width: 100%;
+  padding: 10px 0;
+  margin: 0;
+  border: 0;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+}
+.dark {
+  background-color: transparent;
+  border-bottom: 1px solid #ccc;
+  color: #fff;
+}
+
+.input::placeholder {
+  color: #c4c4c4;
+}
