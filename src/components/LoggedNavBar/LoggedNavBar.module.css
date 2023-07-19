@@ -1,0 +1,64 @@
+.nav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  grid-area: menu;
+}
+
+@media screen and (max-width: 767px) {
+  .nav {
+    display: none;
+  }
+}
+.opened {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  padding-bottom: 40px;
+  margin-bottom: 27px;
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+@media screen and (max-width: 767px) {
+  .button {
+    font-size: 18px;
+  }
+}
+
+.email {
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 122%;
+  color: #fff;
+  margin: 0;
+}
+
+.link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.link:active {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.link:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 767px) {
+  .link {
+    font-size: 18px;
+  }
+}

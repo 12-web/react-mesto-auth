@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import api from '../utils/api';
+import * as auth from '../utils/auth';
+import '../index.css';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Main from './Main/Main';
 import ImagePopup from './ImagePopup/ImagePopup';
-import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup/EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup';
@@ -11,19 +14,10 @@ import AddPlacePopup from './AddPlacePopup/AddPlacePopup';
 import ConfirmDeleteCard from './ConfirmDeleteCard/ConfirmDeleteCard';
 import MainLoader from './MainLoader/MainLoader';
 import { Login } from './Login/Login';
-import {
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-  useHistory,
-} from 'react-router-dom';
-import '../index.css';
 import { Register } from './Register/Register';
 import { Cards } from './Cards/Cards';
 import { InfoTooltip } from './InfoTooltip/InfoTooltip';
 import { ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
-import * as auth from '../utils/auth';
 
 const App = () => {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -60,6 +54,7 @@ const App = () => {
       .finally(() => setIsPageLoading(false));
   }, []);
 
+  /** проверка наличия токена пользователя при входе */
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
@@ -74,7 +69,7 @@ const App = () => {
         })
         .catch(err => console.log(err));
     }
-  }, []);
+  }, [navigate]);
 
   /**
    * фукнция добавления новой картчочки
@@ -178,6 +173,11 @@ const App = () => {
       .finally(() => setFormIsLoading(false));
   };
 
+  /**
+   * авторизация пользователя
+   * @param {string} email - email пользователя при авторизации
+   * @param {string} password - password пользователя при авторизации
+   */
   const handleSignIn = ({ email, password }) => {
     setFormIsLoading(true);
     auth
@@ -185,32 +185,45 @@ const App = () => {
       .then(userData => {
         localStorage.setItem('jwt', userData.token);
         setUserEmail(email);
+        setLoggedIn(true);
         navigate('/', { replace: true });
       })
-      .catch(() => {
+      .catch(err => {
+        console.error(err);
+        /** вывод модального окна с предупреждением */
         setIsInfoTooltipOpen(true);
         setIsSuccessResult(false);
       })
       .finally(() => setFormIsLoading(false));
   };
 
+  /**
+   * выход пользователя с сайта
+   */
   const handleSignOut = () => {
     localStorage.removeItem('jwt');
     setUserEmail('');
+    setLoggedIn(false);
     navigate('/signin', { replace: true });
   };
 
-  const handleSignUp = userData => {
+  /**
+   * регистрация пользователя
+   * @param {string} email - email пользователя при регистрации
+   * @param {string} password - password пользователя при регистрации
+   */
+  const handleSignUp = ({ email, password }) => {
     setFormIsLoading(true);
     auth
-      .register(userData)
-      .then(res => {
-        console.log(res);
+      .register({ email, password })
+      .then(() => {
+        /** вывод модального окна об успешной регистрации */
         setIsSuccessResult(true);
         setIsInfoTooltipOpen(true);
       })
       .catch(err => {
         console.log(err);
+        /** вывод модального окна с предупреждением об ошибке */
         setIsSuccessResult(false);
         setIsInfoTooltipOpen(true);
       })
@@ -234,26 +247,16 @@ const App = () => {
    * @param {string} name - имя карточки
    * @param {string} link - ссылка на картинку карточки
    */
-  const handleCardClick = ({ name, link }) =>
-    setSelectedCard({ name: name, link: link });
-
-  const routes = [
-    {
-      path: '/signin',
-      name: 'Вход',
-      element: <Login />,
-    },
-    {
-      path: '/signup',
-      name: 'Регистрация',
-      element: <Register />,
-    },
-  ];
+  const handleCardClick = ({ name, link }) => setSelectedCard({ name, link });
 
   return (
     <div className='root'>
       <CurrentUserContext.Provider value={currentUser}>
-        <Header onSignOut={handleSignOut} email={userEmail} />
+        <Header
+          loggedIn={loggedIn}
+          onSignOut={handleSignOut}
+          email={userEmail}
+        />
         <Main>
           <Routes>
             <Route
@@ -275,7 +278,7 @@ const App = () => {
               path='/'
               element={
                 <ProtectedRoute
-                  element={Cards}
+                  element={isPageLoading ? MainLoader : Cards}
                   loggedIn={loggedIn}
                   onEditProfile={handleEditProfileClick}
                   onAddPlace={handleAddPlaceClick}

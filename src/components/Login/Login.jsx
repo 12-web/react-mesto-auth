@@ -7,12 +7,20 @@ import styles from './Login.module.css';
 export const Login = ({ isFormLoading, onLogin }) => {
   const [userData, setUserData] = useState({ email: '', password: '' });
   const emailId = 'email-signin';
+  const passwordId = 'password-signin';
   const theme = 'dark';
 
+  /**
+   * отправка формы при авторизации пользователя
+   */
   const handleSubmit = e => {
     e.preventDefault();
     onLogin(userData);
   };
+
+  /**
+   * функция получения данных из формы
+   */
   const handleChange = e => {
     const { name, value } = e.target;
     setUserData({
@@ -36,8 +44,6 @@ export const Login = ({ isFormLoading, onLogin }) => {
           type='email'
           name='email'
           placeholder='Email'
-          minLength={2}
-          maxLength={40}
           value={userData.email}
           onChange={handleChange}
           required
@@ -45,17 +51,16 @@ export const Login = ({ isFormLoading, onLogin }) => {
         <span className={`popup__error ${emailId}-error`}></span>
         <Input
           theme={theme}
-          iid={emailId}
+          id={passwordId}
           type='password'
           name='password'
           placeholder='Пароль'
-          minLength={2}
-          maxLength={40}
           value={userData.password}
           onChange={handleChange}
+          autoComplete='nope'
           required
         />
-        <span className={`popup__error ${emailId}-error`}></span>
+        <span className={`popup__error ${passwordId}-error`}></span>
       </Form>
     </section>
   );

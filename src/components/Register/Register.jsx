@@ -7,12 +7,21 @@ import styles from './Register.module.css';
 
 export const Register = ({ isFormLoading, onRegister }) => {
   const [userData, setUserData] = useState({});
-  const emailId = 'email-signin';
+  const emailId = 'email-signup';
+  const passwordId = 'password-signup';
   const theme = 'dark';
+
+  /**
+   * отправка формы при регистрации пользователя
+   */
   const handleSubmit = e => {
     e.preventDefault();
     onRegister(userData);
   };
+
+  /**
+   * сбор данных пользователя
+   */
   const handleChange = e => {
     const { name, value } = e.target;
     setUserData({
@@ -36,8 +45,6 @@ export const Register = ({ isFormLoading, onRegister }) => {
           type='email'
           name='email'
           placeholder='Email'
-          minLength={2}
-          maxLength={40}
           value={userData.name}
           onChange={handleChange}
           required
@@ -45,17 +52,16 @@ export const Register = ({ isFormLoading, onRegister }) => {
         <span className={`popup__error ${emailId}-error`}></span>
         <Input
           theme={theme}
-          iid={emailId}
+          iid={passwordId}
           type='password'
           name='password'
           placeholder='Пароль'
-          minLength={2}
-          maxLength={40}
           value={userData.name}
           onChange={handleChange}
+          autoComplete='nope'
           required
         />
-        <span className={`popup__error ${emailId}-error`}></span>
+        <span className={`popup__error ${passwordId}-error`}></span>
       </Form>
       <p className={styles.text}>
         Уже зарегистрированы?&nbsp;

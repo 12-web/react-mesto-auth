@@ -1,7 +1,37 @@
 export const BASE_URL = 'https://auth.nomoreparties.co';
 
+/**
+ * Проверка ответа на запрос к серверу
+ * @param {Promise} res - возвращаемый при fetch-запросе объект
+ * @returns {Object} - возвращаемый объект переведен в json-формат и содержит готовые данные
+ */
+const getResponseData = res => {
+  if (!res.ok) {
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+  return res.json();
+};
+
+/**
+ * Осуществление запроса к серверу
+ * @param {string} url - эндпойнт запроса
+ * @param {string} options - объект конфигурации запроса
+ * @returns {Promise} - возвращаемый объект переведен в json-формат и содержит готовые данные
+ */
+const request = (url, options) => {
+  return fetch(`${BASE_URL}/${url}`, options)
+    .then(res => getResponseData(res))
+    .then(data => data);
+};
+
+/**
+ * Аутентификация пользователя
+ * @param {string} email - email пользователя при регистрации
+ * @param {string} password - password пользователя при регистрации
+ * @returns {Promise} - возвращаемый объект содержит id зарегистрированного пользователя и email
+ */
 export const register = ({ email, password }) => {
-  return fetch(`${BASE_URL}/signup`, {
+  return request('signup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -10,18 +40,17 @@ export const register = ({ email, password }) => {
       password: password,
       email: email,
     }),
-  })
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-      return res.json();
-    })
-    .then(data => data);
+  });
 };
 
+/**
+ * Авторизация пользователя
+ * @param {string} email - email пользователя при авторизации
+ * @param {string} password - password пользователя при авторизации
+ * @returns {Promise} - возвращаемый объект содержит токен пользователя
+ */
 export const authorize = ({ email, password }) => {
-  return fetch(`${BASE_URL}/signin`, {
+  return request('signin', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -30,28 +59,19 @@ export const authorize = ({ email, password }) => {
       password: password,
       email: email,
     }),
-  })
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-      return res.json();
-    })
-    .then(data => data);
+  });
 };
 
+/**
+ * Проверка токека пользователя
+ * @param {string} jwt - токен, содержащийся в localStorage
+ * @returns {Promise} - возвращаемый объект содержит id зарегистрированного пользователя и email
+ */
 export const tockenCheck = jwt => {
-  return fetch(`${BASE_URL}/users/me`, {
+  return request('users/me', {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${jwt}`,
     },
-  })
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-      return res.json();
-    })
-    .then(data => data);
+  });
 };

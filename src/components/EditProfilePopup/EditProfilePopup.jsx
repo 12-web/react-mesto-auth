@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { Input } from '../Input/Input';
 
 const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, isFormLoading }) => {
   const [userData, setUserData] = useState({ name: '', about: '' });
@@ -47,7 +48,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, isFormLoading }) => {
       name='edit'
       buttonText={isFormLoading ? 'Сохранение...' : 'Сохранить'}
     >
-      <input
+      <Input
         className='popup__input popup__input_value_name'
         id={nameId}
         type='text'
@@ -60,7 +61,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, isFormLoading }) => {
         required
       />
       <span className={`popup__error ${nameId}-error`}></span>
-      <input
+      <Input
         className='popup__input popup__input_value_profession'
         id={aboutId}
         type='text'

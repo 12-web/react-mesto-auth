@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import { Input } from '../Input/Input';
 
 const AddPlacePopup = ({ onClose, isOpen, onAddPlace, isFormLoading }) => {
   const [cardData, setCardData] = useState({ title: '', link: '' });
@@ -15,9 +16,10 @@ const AddPlacePopup = ({ onClose, isOpen, onAddPlace, isFormLoading }) => {
 
   /** получение данных из формы */
   const handleChange = e => {
+    const { name, value } = e.target;
     setCardData({
       ...cardData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
@@ -35,7 +37,7 @@ const AddPlacePopup = ({ onClose, isOpen, onAddPlace, isFormLoading }) => {
       name='add'
       buttonText={isFormLoading ? 'Секундочку...' : 'Создать'}
     >
-      <input
+      <Input
         value={cardData.title}
         onChange={handleChange}
         className='popup__input popup__input_value_name'
@@ -48,7 +50,7 @@ const AddPlacePopup = ({ onClose, isOpen, onAddPlace, isFormLoading }) => {
         required
       />
       <span className={`popup__error ${addNameId}-error`}></span>
-      <input
+      <Input
         value={cardData.link}
         onChange={handleChange}
         className='popup__input popup__input_value_link'

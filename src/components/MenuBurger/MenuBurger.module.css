@@ -1,0 +1,21 @@
+.button {
+  display: none;
+  width: 24px;
+  height: 18px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  background: center / contain no-repeat
+    url('../../images/menu-burger-icon.svg');
+}
+
+.opened {
+  background: center / contain no-repeat url('../../images/close-icon.svg');
+}
+
+@media screen and (max-width: 767px) {
+  .button {
+    display: block;
+    margin-right: 30px;
+  }
+}
