@@ -22,7 +22,9 @@ export const InfoTooltip = ({ isSuccessResult, textTooltip, ...props }) => {
         src={isSuccessResult ? succesImage : unSuccesImage}
         alt={isSuccessResult ? 'Успех' : 'Неудача'}
       />
-      <p className={styles.text}>{textTooltip}</p>
+      <p className={styles.text}>
+        {textTooltip ? textTooltip : isSuccessResult ? 'Успешно' : 'Неудача'}
+      </p>
     </Popup>
   );
 };
