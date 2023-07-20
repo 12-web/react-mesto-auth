@@ -74,8 +74,9 @@ const App = () => {
 
   /**
    * фукнция добавления новой картчочки
-   * @param {string} name - название карточки
-   * @param {string} link - ссылка на картинку карточки
+   * @param { Object } card
+   * @param { string } card.name - название карточки
+   * @param { string } card. link - ссылка на картинку карточки
    */
   const handleAddPlaceSubmit = ({ title: name, link }) => {
     setFormIsLoading(true);
@@ -91,8 +92,9 @@ const App = () => {
 
   /**
    * изменение данных пользователя и закрытие модального окна
-   * @param {string} name - имя пользователя
-   * @param {string} about - род деятельности пользователя
+   * @param { Object } user
+   * @param { string } user.name - имя пользователя
+   * @param { string } user.about - род деятельности пользователя
    */
   const handleUpdateUser = ({ name, about }) => {
     setFormIsLoading(true);
@@ -108,7 +110,7 @@ const App = () => {
 
   /**
    * изменение аватара и закрытие модального окна
-   * @param {string} avatar - ссылка на картинку (аватар пользователя)
+   * @param { string } avatar - ссылка на картинку (аватар пользователя)
    */
   const handleUpdateAvatar = avatar => {
     setFormIsLoading(true);
@@ -124,8 +126,9 @@ const App = () => {
 
   /**
    * изменение статуса лайка и количества лайков
-   * @param {Array} card.likes - массив лайков карточки
-   * @param {string} card._id - идентификатор карточки
+   * @param { Object } card
+   * @param { Array.<{string}> } card.likes - массив лайков карточки
+   * @param { string } card._id - идентификатор карточки
    */
   const handleCardLike = card => {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -151,7 +154,7 @@ const App = () => {
 
   /**
    * открытие модального окна подтверждения удаления карточки
-   * @param {string} id
+   * @param { string } id - идентификатор карточки
    */
   const handleCardDeleteClick = id => {
     setIsDeleteCardPopupOpen(true);
@@ -160,7 +163,7 @@ const App = () => {
 
   /**
    * удаление карточки и закрытие модального окна
-   * @param {string} id - идентификатор карточки
+   * @param { string } id - идентификатор карточки
    */
   const handleCardDelete = id => {
     setFormIsLoading(true);
@@ -176,8 +179,9 @@ const App = () => {
 
   /**
    * авторизация пользователя
-   * @param {string} email - email пользователя при авторизации
-   * @param {string} password - password пользователя при авторизации
+   * @param { Object } user
+   * @param { string } user.email - email пользователя при авторизации
+   * @param { string } user.password - password пользователя при авторизации
    */
   const handleSignIn = ({ email, password }) => {
     setFormIsLoading(true);
@@ -211,8 +215,9 @@ const App = () => {
 
   /**
    * регистрация пользователя
-   * @param {string} email - email пользователя при регистрации
-   * @param {string} password - password пользователя при регистрации
+   * @param { Object } user
+   * @param { string } user.email - email пользователя при регистрации
+   * @param { string } user. password - password пользователя при регистрации
    */
   const handleSignUp = ({ email, password }) => {
     setFormIsLoading(true);
@@ -248,8 +253,9 @@ const App = () => {
 
   /**
    * нажатие на карточку с открытие модального окна просмотра карточки
-   * @param {string} name - имя карточки
-   * @param {string} link - ссылка на картинку карточки
+   * @param { Object } user
+   * @param { string } user.name - имя карточки
+   * @param { string } user.link - ссылка на картинку карточки
    */
   const handleCardClick = ({ name, link }) => setSelectedCard({ name, link });
 

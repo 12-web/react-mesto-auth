@@ -2,8 +2,8 @@ export const BASE_URL = 'https://auth.nomoreparties.co';
 
 /**
  * Проверка ответа на запрос к серверу
- * @param {Promise} res - возвращаемый при fetch-запросе объект
- * @returns {Object} - возвращаемый объект переведен в json-формат и содержит готовые данные
+ * @param { Promise } res - возвращаемый при fetch-запросе объект
+ * @returns { Object } - возвращаемый объект переведен в json-формат и содержит готовые данные
  */
 const getResponseData = res => {
   if (!res.ok) {
@@ -14,9 +14,9 @@ const getResponseData = res => {
 
 /**
  * Осуществление запроса к серверу
- * @param {string} url - эндпойнт запроса
- * @param {string} options - объект конфигурации запроса
- * @returns {Promise} - возвращаемый объект переведен в json-формат и содержит готовые данные
+ * @param { string } url - эндпойнт запроса
+ * @param { string } options - объект конфигурации запроса
+ * @returns { Promise } - возвращаемый объект переведен в json-формат и содержит готовые данные
  */
 const request = (url, options) => {
   return fetch(`${BASE_URL}/${url}`, options).then(res => getResponseData(res));
@@ -24,9 +24,10 @@ const request = (url, options) => {
 
 /**
  * Аутентификация пользователя
- * @param {string} email - email пользователя при регистрации
- * @param {string} password - password пользователя при регистрации
- * @returns {Promise} - возвращаемый объект содержит id зарегистрированного пользователя и email
+ * @param { Object } user
+ * @param { string}  user.email - email пользователя при регистрации
+ * @param { string } user.password - password пользователя при регистрации
+ * @returns { Promise.<{string[]}> } - возвращаемый объект содержит id зарегистрированного пользователя и email
  */
 export const register = ({ email, password }) => {
   return request('signup', {
@@ -43,9 +44,10 @@ export const register = ({ email, password }) => {
 
 /**
  * Авторизация пользователя
- * @param {string} email - email пользователя при авторизации
- * @param {string} password - password пользователя при авторизации
- * @returns {Promise} - возвращаемый объект содержит токен пользователя
+ * @param { Object } user
+ * @param { string } user.email - email пользователя при авторизации
+ * @param { string } user.password - password пользователя при авторизации
+ * @returns { Promise.<{string}> } - возвращаемый объект содержит токен пользователя
  */
 export const authorize = ({ email, password }) => {
   return request('signin', {
@@ -62,8 +64,8 @@ export const authorize = ({ email, password }) => {
 
 /**
  * Проверка токека пользователя
- * @param {string} jwt - токен, содержащийся в localStorage
- * @returns {Promise} - возвращаемый объект содержит id зарегистрированного пользователя и email
+ * @param { string } jwt - токен, содержащийся в localStorage
+ * @returns { Promise.<{string}> } - возвращаемый объект содержит id зарегистрированного пользователя и email
  */
 export const tockenCheck = jwt => {
   return request('users/me', {
