@@ -19,9 +19,7 @@ const getResponseData = res => {
  * @returns {Promise} - возвращаемый объект переведен в json-формат и содержит готовые данные
  */
 const request = (url, options) => {
-  return fetch(`${BASE_URL}/${url}`, options)
-    .then(res => getResponseData(res))
-    .then(data => data);
+  return fetch(`${BASE_URL}/${url}`, options).then(res => getResponseData(res));
 };
 
 /**

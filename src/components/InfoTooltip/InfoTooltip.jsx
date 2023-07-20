@@ -8,12 +8,13 @@ import PropTypes from 'prop-types';
  * Компонент попапа статуса отправки формы авторизации/регистрации (удачно / не удачно)
  * @component
  * @param { Object } props
- * @param {bool} props.isSuccessResult - состояние отправки формы регистрации/авторизации (успешно / не успешно)
- * @param {Array} props.props - параметры, передаваемые в попап (состояние открытия попапа,
+ * @param { boolean } props.isSuccessResult - состояние отправки формы регистрации/авторизации (успешно / не успешно)
+ * @param { string | string[] } props.textTooltip - текст подсказки после отправки формы
+ * @param { Array } props.props - параметры, передаваемые в попап (состояние открытия попапа,
  * имя модификатора класса попапа, функцию закрытия попапа)
  */
 
-export const InfoTooltip = ({ isSuccessResult, ...props }) => {
+export const InfoTooltip = ({ isSuccessResult, textTooltip, ...props }) => {
   return (
     <Popup {...props}>
       <img
@@ -21,16 +22,16 @@ export const InfoTooltip = ({ isSuccessResult, ...props }) => {
         src={isSuccessResult ? succesImage : unSuccesImage}
         alt={isSuccessResult ? 'Успех' : 'Неудача'}
       />
-      <p className={styles.text}>
-        {isSuccessResult
-          ? 'Вы успешно зарегистрировались!'
-          : 'Что-то пошло не так! Попробуйте ещё раз.'}
-      </p>
+      <p className={styles.text}>{textTooltip}</p>
     </Popup>
   );
 };
 
 InfoTooltip.propTypes = {
   isSuccessResult: PropTypes.bool,
+  textTooltip: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
   props: PropTypes.array,
 };

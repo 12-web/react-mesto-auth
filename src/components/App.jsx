@@ -38,6 +38,7 @@ const App = () => {
   const [isSuccessResult, setIsSuccessResult] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [textTooltip, setTextTooltip] = useState('');
   const navigate = useNavigate();
 
   /** добавление данных пользователя и карточек при загрузке страницы */
@@ -52,7 +53,7 @@ const App = () => {
       })
       .catch(console.error)
       .finally(() => setIsPageLoading(false));
-  }, []);
+  }, [loggedIn]);
 
   /** проверка наличия токена пользователя при входе */
   useEffect(() => {
@@ -191,6 +192,7 @@ const App = () => {
       .catch(err => {
         console.error(err);
         /** вывод модального окна с предупреждением */
+        setTextTooltip('Что-то пошло не так! Попробуйте ещё раз.');
         setIsInfoTooltipOpen(true);
         setIsSuccessResult(false);
       })
@@ -216,16 +218,18 @@ const App = () => {
     setFormIsLoading(true);
     auth
       .register({ email, password })
-      .then(() => {
+      .then(res => {
         /** вывод модального окна об успешной регистрации */
         setIsSuccessResult(true);
         setIsInfoTooltipOpen(true);
+        setTextTooltip('Вы успешно зарегистрировались!');
       })
       .catch(err => {
         console.log(err);
         /** вывод модального окна с предупреждением об ошибке */
         setIsSuccessResult(false);
         setIsInfoTooltipOpen(true);
+        setTextTooltip('Что-то пошло не так! Попробуйте ещё раз.');
       })
       .finally(() => setFormIsLoading(false));
   };
@@ -298,6 +302,7 @@ const App = () => {
           name='info'
           isOpen={isInfoTooltipOpen}
           onClose={closeAllPopups}
+          textTooltip={textTooltip}
           isSuccessResult={isSuccessResult}
         />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
