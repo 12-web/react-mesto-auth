@@ -1,22 +1,14 @@
-import { useContext } from 'react';
 import PropTypes from 'prop-types';
-import Card from '../Card/Card';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { Login } from '../Login/Login';
-import { Register } from '../Register/Register';
 
-const Main = ({ children }) => {
+/**
+ * Компонент контейнера основного контента страницы
+ * @component
+ * @param {{ children: JSX.Element }} children - содежимое страницы
+ */
+export const Main = ({ children }) => {
   return <main className='content'>{children}</main>;
 };
 
 Main.propTypes = {
-  onEditAvatar: PropTypes.func,
-  onEditProfile: PropTypes.func,
-  onAddPlace: PropTypes.func,
-  onCardClick: PropTypes.func,
-  onCardLike: PropTypes.func,
-  onCardDelete: PropTypes.func,
-  cards: PropTypes.arrayOf(PropTypes.object),
+  children: PropTypes.node,
 };
-
-export default Main;

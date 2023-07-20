@@ -1,8 +1,21 @@
-import Card from '../Card/Card';
+import { Card } from '../Card/Card';
 import { useContext } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import PropTypes from 'prop-types';
 
-export const Cards = ({
+/**
+ * Компонент страницы с карточками и данными пользователя
+ * @component
+ * @param { Object } props
+ * @param { function } props.onEditProfile - функция изменения данных пользователя
+ * @param { function } props.onAddPlace - функция добавления новой карточки
+ * @param { function } props.onEditAvatar - функция изменения аватара пользователя
+ * @param { function } props.onCardClick - функция нажатия на карточки с открытие попапа просмотра картинки
+ * @param { function } props.onCardLike - функция лайка карточки
+ * @param { function } props.onCardDelete - функция удаления карточки
+ * @param { Array } props.cards - массив с карточками, полученными с сервара
+ */
+export const Profile = ({
   onEditProfile,
   onAddPlace,
   onEditAvatar,
@@ -33,7 +46,7 @@ export const Cards = ({
             <button
               className='profile__edit-btn btn'
               id='edit-profile-btn'
-              title='Редактировать профиль'
+              aria-label='Редактировать профиль'
               type='button'
               onClick={onEditProfile}
             />
@@ -42,7 +55,7 @@ export const Cards = ({
         <button
           className='profile__add-btn btn'
           id='add-card-btn'
-          title='Добавить карточку'
+          aria-label='Добавить карточку'
           type='button'
           onClick={onAddPlace}
         />
@@ -62,4 +75,14 @@ export const Cards = ({
       </section>
     </>
   );
+};
+
+Profile.propTypes = {
+  onEditProfile: PropTypes.func,
+  onAddPlace: PropTypes.func,
+  onEditAvatar: PropTypes.func,
+  onCardClick: PropTypes.func,
+  onCardLike: PropTypes.func,
+  onCardDelete: PropTypes.func,
+  cards: PropTypes.array,
 };

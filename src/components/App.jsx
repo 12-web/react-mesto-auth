@@ -3,19 +3,19 @@ import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 import * as auth from '../utils/auth';
 import '../index.css';
-import Header from './Header/Header';
-import Footer from './Footer/Footer';
-import Main from './Main/Main';
-import ImagePopup from './ImagePopup/ImagePopup';
+import { Header } from './Header/Header';
+import { Footer } from './Footer/Footer';
+import { Main } from './Main/Main';
+import { ImagePopup } from './ImagePopup/ImagePopup';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import EditProfilePopup from './EditProfilePopup/EditProfilePopup';
-import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup';
-import AddPlacePopup from './AddPlacePopup/AddPlacePopup';
-import ConfirmDeleteCard from './ConfirmDeleteCard/ConfirmDeleteCard';
-import MainLoader from './MainLoader/MainLoader';
+import { EditProfilePopup } from './EditProfilePopup/EditProfilePopup';
+import { EditAvatarPopup } from './EditAvatarPopup/EditAvatarPopup';
+import { AddPlacePopup } from './AddPlacePopup/AddPlacePopup';
+import { ConfirmDeleteCard } from './ConfirmDeleteCard/ConfirmDeleteCard';
+import { MainLoader } from './MainLoader/MainLoader';
 import { Login } from './Login/Login';
 import { Register } from './Register/Register';
-import { Cards } from './Cards/Cards';
+import { Profile } from './Profile/Profile';
 import { InfoTooltip } from './InfoTooltip/InfoTooltip';
 import { ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
 
@@ -278,7 +278,7 @@ const App = () => {
               path='/'
               element={
                 <ProtectedRoute
-                  element={isPageLoading ? MainLoader : Cards}
+                  element={isPageLoading ? MainLoader : Profile}
                   loggedIn={loggedIn}
                   onEditProfile={handleEditProfileClick}
                   onAddPlace={handleAddPlaceClick}

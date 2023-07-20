@@ -1,18 +1,30 @@
 import { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import { PopupWithForm } from '../PopupWithForm/PopupWithForm';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { Input } from '../Input/Input';
 
-const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, isFormLoading }) => {
+/**
+ * Компонент попапа изменения данных пользователя
+ * @component
+ * @param { Object } props
+ * @param { boolean } props.isOpen - состояние открытия попапа
+ * @param { function } props.onClose - функция закрытия попапа
+ * @param { function } props.onUpdateUser - функция изменения данных пользователя
+ * @param { boolean } props.isFormLoading - состояние загрузки ответа с сервера
+ */
+export const EditProfilePopup = ({
+  isOpen,
+  onClose,
+  onUpdateUser,
+  isFormLoading,
+}) => {
   const [userData, setUserData] = useState({ name: '', about: '' });
   const currentUser = useContext(CurrentUserContext);
   const nameId = 'edit-name';
   const aboutId = 'edit-about';
 
-  /**
-   * добавление данных пользователя при загрузке страницы
-   */
+  /** добавление данных пользователя при загрузке страницы */
   useEffect(() => {
     setUserData({
       name: currentUser.name,
@@ -20,17 +32,13 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, isFormLoading }) => {
     });
   }, [currentUser, isOpen]);
 
-  /**
-   * функция отправки формы при которой обновляются данные в профиле
-   */
+  /** функция отправки формы при которой обновляются данные в профиле */
   const handleSubmit = e => {
     e.preventDefault();
     onUpdateUser(userData);
   };
 
-  /**
-   * функция получения данных из формы
-   */
+  /** функция получения данных из формы */
   const handleChange = e => {
     const { name, value } = e.target;
     setUserData({
@@ -46,7 +54,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, isFormLoading }) => {
       onClose={onClose}
       title='Редактировать профиль'
       name='edit'
-      buttonText={isFormLoading ? 'Сохранение...' : 'Сохранить'}
+      submitText={isFormLoading ? 'Сохранение...' : 'Сохранить'}
     >
       <Input
         className='popup__input popup__input_value_name'
@@ -54,8 +62,8 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, isFormLoading }) => {
         type='text'
         name='name'
         placeholder='Имя'
-        minLength='2'
-        maxLength='40'
+        minLength={2}
+        maxLength={40}
         value={userData.name}
         onChange={handleChange}
         required
@@ -67,8 +75,8 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, isFormLoading }) => {
         type='text'
         name='about'
         placeholder='Род деятельности'
-        minLength='2'
-        maxLength='200'
+        minLength={2}
+        maxLength={200}
         value={userData.about}
         onChange={handleChange}
         required
@@ -84,5 +92,3 @@ EditProfilePopup.propTypes = {
   onUpdateUser: PropTypes.func,
   isFormLoading: PropTypes.bool,
 };
-
-export default EditProfilePopup;

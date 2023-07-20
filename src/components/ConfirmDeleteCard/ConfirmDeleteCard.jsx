@@ -1,7 +1,17 @@
-import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import { PopupWithForm } from '../PopupWithForm/PopupWithForm';
 import PropTypes from 'prop-types';
 
-const ConfirmDeleteCard = ({
+/**
+ * Компонент попапа подтверждения удаления карточки
+ * @component
+ * @param { Object } props
+ * @param { boolean } props.isOpen - состояние открытия попапа
+ * @param { function } props.onClose - функция закрытия попапа
+ * @param { function } props.onConfirmDelete - функция подтверждения удаления карточки
+ * @param { string } props.cardId - id удаляемой карточки
+ * @param { boolean } props.isFormLoading - состояние загрузки ответа с сервера
+ */
+export const ConfirmDeleteCard = ({
   isOpen,
   onClose,
   onConfirmDelete,
@@ -15,10 +25,9 @@ const ConfirmDeleteCard = ({
   return (
     <PopupWithForm
       onSubmit={handleSubmit}
-      onConfirmDelete={onConfirmDelete}
       title='Вы уверены?'
       name='delete-confirm'
-      buttonText={isFormLoading ? 'Удаление...' : 'Да'}
+      submitText={isFormLoading ? 'Удаление...' : 'Да'}
       isOpen={isOpen}
       onClose={onClose}
     />
@@ -32,5 +41,3 @@ ConfirmDeleteCard.propTypes = {
   onConfirmDelete: PropTypes.func,
   isFormLoading: PropTypes.bool,
 };
-
-export default ConfirmDeleteCard;

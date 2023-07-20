@@ -1,4 +1,4 @@
-.button {
+.submit {
   padding: 14px 5px;
   width: 100%;
   background-color: #000;
@@ -11,6 +11,7 @@
   line-height: 1.22;
   margin-top: auto;
   transition: opacity 0.4s ease-in-out;
+  cursor: pointer;
 }
 
 .dark {
@@ -18,12 +19,12 @@
   background-color: #fff;
 }
 
-.button:hover {
+.submit:hover {
   opacity: 0.8;
 }
 
 @media screen and (max-width: 767px) {
-  .button {
+  .submit {
     font-size: 14px;
     line-height: 1.21;
   }

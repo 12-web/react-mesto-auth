@@ -1,9 +1,23 @@
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import { PopupWithForm } from '../PopupWithForm/PopupWithForm';
 import { Input } from '../Input/Input';
+import PropTypes from 'prop-types';
 
-const AddPlacePopup = ({ onClose, isOpen, onAddPlace, isFormLoading }) => {
+/**
+ * Компонент формы добавления новой карточки
+ * @component
+ * @param { Object } props
+ * @param { function } props.onClose - функция закрытия попапа
+ * @param { boolean } props.isOpen - состояние открытия попапа
+ * @param { function } props.onAddPlace - функция добавления новой карточки
+ * @param { boolean } props.isFormLoading - состояние загрузки ответа с сервера
+ */
+export const AddPlacePopup = ({
+  onClose,
+  isOpen,
+  onAddPlace,
+  isFormLoading,
+}) => {
   const [cardData, setCardData] = useState({ title: '', link: '' });
   const addNameId = 'add-name';
   const addLinkId = 'add-link';
@@ -35,7 +49,7 @@ const AddPlacePopup = ({ onClose, isOpen, onAddPlace, isFormLoading }) => {
       onSubmit={handleSubmit}
       title='Новое место'
       name='add'
-      buttonText={isFormLoading ? 'Секундочку...' : 'Создать'}
+      submitText={isFormLoading ? 'Секундочку...' : 'Создать'}
     >
       <Input
         value={cardData.title}
@@ -45,8 +59,8 @@ const AddPlacePopup = ({ onClose, isOpen, onAddPlace, isFormLoading }) => {
         type='text'
         name='title'
         placeholder='Название'
-        minLength='2'
-        maxLength='30'
+        minLength={2}
+        maxLength={30}
         required
       />
       <span className={`popup__error ${addNameId}-error`}></span>
@@ -71,5 +85,3 @@ AddPlacePopup.propTypes = {
   onAddPlace: PropTypes.func,
   isFormLoading: PropTypes.bool,
 };
-
-export default AddPlacePopup;

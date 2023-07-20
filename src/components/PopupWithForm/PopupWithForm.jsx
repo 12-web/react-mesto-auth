@@ -1,25 +1,37 @@
-import PropTypes from 'prop-types';
 import { Popup } from '../Popup/Popup';
 import { Form } from '../Form/Form';
 import { Title } from '../Title/Title';
+import PropTypes from 'prop-types';
 
-const PopupWithForm = ({
+/**
+ * Компонент попапа с формой
+ * @component
+ * @param { Object } props
+ * @param { boolean } props.isOpen - состояние открытия попапа
+ * @param { function } props.onSubmit - функция отправки формы
+ * @param { string } props.name - имя формы
+ * @param { string } props.title - заголовок попапа с формой
+ * @param { function } props.onClose - функция закрытия попапа
+ * @param { string } props.submitText - текст кнопки отправки формы
+ * @param {{ children: JSX.Element }} props.children - содержимое попапа
+ */
+export const PopupWithForm = ({
   isOpen,
   onClose,
   onSubmit,
   name,
   title,
-  buttonText,
+  submitText,
   children,
 }) => {
   return (
-    <Popup isOpen={isOpen} name={name} title={title} onClose={onClose}>
+    <Popup isOpen={isOpen} name={name} onClose={onClose}>
       <Title>{title}</Title>
       <Form
         onSubmit={onSubmit}
         name={name}
         children={children}
-        buttonText={buttonText}
+        submitText={submitText}
       >
         {children}
       </Form>
@@ -33,8 +45,6 @@ PopupWithForm.propTypes = {
   onSubmit: PropTypes.func,
   name: PropTypes.string,
   title: PropTypes.string,
-  buttonText: PropTypes.string,
+  submitText: PropTypes.string,
   children: PropTypes.node,
 };
-
-export default PopupWithForm;

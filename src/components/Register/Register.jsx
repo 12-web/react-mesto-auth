@@ -4,24 +4,28 @@ import { Title } from '../Title/Title';
 import { Input } from '../Input/Input';
 import { Link } from 'react-router-dom';
 import styles from './Register.module.css';
+import PropTypes from 'prop-types';
 
+/**
+ * Компонент защищенного роута
+ * @component
+ * @param { Object } props
+ * @param { boolean } props.isFormLoading - состояние загрузки ответа с сервера
+ * @param { function } props.onRegister - функция регистрации пользователя на сайте
+ */
 export const Register = ({ isFormLoading, onRegister }) => {
   const [userData, setUserData] = useState({});
   const emailId = 'email-signup';
   const passwordId = 'password-signup';
   const theme = 'dark';
 
-  /**
-   * отправка формы при регистрации пользователя
-   */
+  /** отправка формы при регистрации пользователя */
   const handleSubmit = e => {
     e.preventDefault();
     onRegister(userData);
   };
 
-  /**
-   * сбор данных пользователя
-   */
+  /** сбор данных пользователя */
   const handleChange = e => {
     const { name, value } = e.target;
     setUserData({
@@ -37,7 +41,7 @@ export const Register = ({ isFormLoading, onRegister }) => {
         theme={theme}
         onSubmit={handleSubmit}
         name='signIn'
-        buttonText={isFormLoading ? 'Секундочку...' : 'Зарегистрироваться'}
+        submitText={isFormLoading ? 'Секундочку...' : 'Зарегистрироваться'}
       >
         <Input
           theme={theme}
@@ -71,4 +75,9 @@ export const Register = ({ isFormLoading, onRegister }) => {
       </p>
     </section>
   );
+};
+
+Register.propTypes = {
+  isFormLoading: PropTypes.bool,
+  onRegister: PropTypes.func,
 };

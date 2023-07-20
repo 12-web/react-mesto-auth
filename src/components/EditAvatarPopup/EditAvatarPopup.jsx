@@ -1,9 +1,19 @@
 import { useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
-import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import { PopupWithForm } from '../PopupWithForm/PopupWithForm';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-const EditAvatarPopup = ({
+/**
+ * Компонент попапа изменения аватара пользователя
+ * @component
+ * @param { Object } props
+ * @param { boolean } props.isOpen - состояние открытия попапа
+ * @param { function } props.onClose - функция закрытия попапа
+ * @param { function } props.onUpdateAvatar - функция изменения аватара пользователя
+ * @param { boolean } props.isFormLoading - состояние загрузки ответа с сервера
+ */
+
+export const EditAvatarPopup = ({
   isOpen,
   onClose,
   onUpdateAvatar,
@@ -26,7 +36,7 @@ const EditAvatarPopup = ({
       onSubmit={handleSubmit}
       title='Обновить аватар'
       name='avatar'
-      buttonText={isFormLoading ? 'Сохранение...' : 'Сохранить'}
+      submitText={isFormLoading ? 'Сохранение...' : 'Сохранить'}
     >
       <input
         ref={avatar}
@@ -49,5 +59,3 @@ EditAvatarPopup.propTypes = {
   onUpdateAvatar: PropTypes.func,
   isFormLoading: PropTypes.bool,
 };
-
-export default EditAvatarPopup;

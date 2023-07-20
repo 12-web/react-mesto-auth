@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import styles from './MenuBurger.module.css';
+import PropTypes from 'prop-types';
 
+/**
+ * Компонент меню-бургера
+ * @component
+ * @param {{ onClick: function }} onClick - функция нажатия на бургер
+ */
 export const MenuBurger = ({ onClick }) => {
   const [burgerIsOpen, setBurgerIsOpen] = useState(false);
 
@@ -17,4 +23,8 @@ export const MenuBurger = ({ onClick }) => {
       aria-label='Открыть меню'
     ></button>
   );
+};
+
+MenuBurger.propTypes = {
+  onClick: PropTypes.func,
 };

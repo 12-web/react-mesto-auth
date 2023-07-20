@@ -1,9 +1,15 @@
 import { useState, useEffect } from 'react';
 import styles from './Footer.module.css';
 
-const Footer = () => {
+/**
+ * Компонент футера (подвала) сайта
+ * @component
+ */
+
+export const Footer = () => {
   const [currentYear, setCurrentYear] = useState(0);
 
+  /** добавление на страницу текущего года */
   useEffect(() => {
     const date = new Date();
     const currentYear = date.getFullYear();
@@ -16,5 +22,3 @@ const Footer = () => {
     </footer>
   );
 };
-
-export default Footer;

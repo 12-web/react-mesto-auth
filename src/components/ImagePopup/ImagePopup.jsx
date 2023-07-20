@@ -1,6 +1,15 @@
 import PropTypes from 'prop-types';
 
-const ImagePopup = ({ card, onClose }) => {
+/**
+ * Компонент попапа просмотра карточки
+ * @component
+ * @param { Object } props
+ * @param { Object } props.card - объект, содержащий данные карточки (название, ссылка, количество лайков)
+ * @param { string } props.card.name - название карточки
+ * @param { string } props.card.link - ссылка на картинку в карточке
+ * @param { function } props.onClose - функция закрытия попапа
+ */
+export const ImagePopup = ({ card, onClose }) => {
   return (
     <div className={`popup ${card.link && 'popup_opened'} popup_type_show`}>
       <div className='popup__show-content'>
@@ -20,8 +29,6 @@ const ImagePopup = ({ card, onClose }) => {
 };
 
 ImagePopup.propTypes = {
-  card: PropTypes.object,
+  card: PropTypes.objectOf(PropTypes.string),
   onClose: PropTypes.func,
 };
-
-export default ImagePopup;
