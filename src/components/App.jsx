@@ -43,16 +43,18 @@ const App = () => {
 
   /** добавление данных пользователя и карточек при загрузке страницы */
   useEffect(() => {
-    setIsPageLoading(true);
-    Promise.all([api.getUserInformation(), api.getInitialCards()])
-      .then(([userData, cardsList]) => {
-        // получение данных пользователя
-        setCurrentUser(userData);
-        // получение карточек
-        setCards(cardsList);
-      })
-      .catch(console.error)
-      .finally(() => setIsPageLoading(false));
+    if (loggedIn) {
+      setIsPageLoading(true);
+      Promise.all([api.getUserInformation(), api.getInitialCards()])
+        .then(([userData, cardsList]) => {
+          // получение данных пользователя
+          setCurrentUser(userData);
+          // получение карточек
+          setCards(cardsList);
+        })
+        .catch(console.error)
+        .finally(() => setIsPageLoading(false));
+    }
   }, [loggedIn]);
 
   /** проверка наличия токена пользователя при входе */
